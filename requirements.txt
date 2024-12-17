@@ -5,6 +5,7 @@ django-admin-interface==0.29.2
 # SECURITY
 whitenoise==6.8.2
 gunicorn==23.0.0 
+gevent>=1.4 # for gunicorn
 # il8n
 python-gettext==5.0
 #TOOLS

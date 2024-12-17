@@ -17,11 +17,11 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost',
-    f'{os.getenv('DOMAIN')}',
-    f'{os.getenv('DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('DOMAIN')}:{os.getenv('POSTGRESQL_PORT')}',
-    f'{os.getenv('DOMAIN')}:{os.getenv('REDIS_PORT')}', 
+    f'{os.getenv('MAIN_DOMAIN')}',
+    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
+    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
+    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
+    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}', 
 ]
 #default
 INSTALLED_APPS = [
@@ -63,24 +63,24 @@ INSTALLED_APPS.extend(os.getenv('DJANGO_APPS').split())
 CSRF_COOKIE_SECURE = not DEBUG
 
 CSRF_TRUSTED_ORIGINS = [
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('POSTGRESQL_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('REDIS_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}',
 ]
 
 # CORS (Cross-Origin Resource Sharing)
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('POSTGRESQL_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}:{os.getenv('REDIS_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('DOMAIN')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}',
+    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}',
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -132,7 +132,7 @@ ROOT_URLCONF = f'{os.getenv('APP_NAME')}.urls'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{os.getenv('DOMAIN')}:{os.getenv('REDIS_PORT')}/0', 
+        'LOCATION': f'redis://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}/0', 
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             # "SOCKET_CONNECT_TIMEOUT": 5,  # seconds
@@ -169,12 +169,12 @@ WSGI_APPLICATION = f'{os.getenv('APP_NAME')}.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE'),
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'), 
-        'PORT': os.getenv('POSTGRESQL_PORT'),  
+        'ENGINE': os.getenv('PSQL_ENGINE'),
+        'NAME': os.getenv('PSQL_NAME'),
+        'USER': os.getenv('PSQL_USER'),
+        'PASSWORD': os.getenv('PSQL_PASSWORD'),
+        'HOST': os.getenv('PSQL_HOST'), 
+        'PORT': os.getenv('PSQL_PORT'),  
     },
 }
 

@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Crear el directorio principal del proyecto y establecer el directorio de trabajo
-WORKDIR /Django
+WORKDIR /api
 
 # Copiar el archivo de requisitos del proyecto
 COPY requirements.txt ./
