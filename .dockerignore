@@ -1,0 +1,30 @@
+
+.git
+
+venv/
+.venv/
+
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+
+# Ignorar directorios de migraciones en todas las aplicaciones
+**/migrations/
+**/migrations/**
+!**/migrations/__init__.py
+
+#Visual Studio
+obj/
+.vs/
+
+# Visual Studio Code # 
+.vscode/* 
+!.vscode/settings.json 
+!.vscode/tasks.json 
+!.vscode/launch.json 
+!.vscode/extensions.json 
+.history

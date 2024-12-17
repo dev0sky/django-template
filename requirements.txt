@@ -1,0 +1,31 @@
+django==5.1
+python-dotenv==1.0.1
+# Admin
+django-admin-interface==0.29.2
+# SECURITY
+whitenoise==6.8.2
+gunicorn==23.0.0 
+# il8n
+python-gettext==5.0
+#TOOLS
+django-crispy-forms==2.3
+django-colorfield 
+django-cors-headers==4.6.0
+django-import-export==4.3.3
+django-countries==7.6.1
+# API
+django-allauth==65.3.0
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.3.1
+django-rest-polymorphic==0.1.10
+coreapi
+coreapi-cli
+# Database
+django-redis==5.4.0
+django-polymorphic==3.1.0
+django-autocomplete-light==3.11.0
+# Debug
+livereload==2.7.0
+django-debug-toolbar==4.4.6
+# Testing
+pytest==7.0.1
