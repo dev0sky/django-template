@@ -1,0 +1,11 @@
+{
+    "blank_line_after_tag": "load,extends,include",
+    "blank_line_before_tag": "block,extends,include",
+    "close_void_tags": true,
+    "exclude": ".venv,venv,env,staticfiles,media",
+    "indent": "3",
+    "max_line_length": "255",
+    "profile": "django",
+    "use_gitignore": true,
+    "include": "D004,D018,H006,H008,H009,H010,H011,H012,H013,H014,H015"
+}

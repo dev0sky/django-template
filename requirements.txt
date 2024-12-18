@@ -28,6 +28,7 @@ django-redis==5.4.0
 django-polymorphic==3.1.0
 django-autocomplete-light==3.11.0
 # Debug
+djlint==1.36.3
 livereload==2.7.0
 django-debug-toolbar==4.4.6
 # Testing
