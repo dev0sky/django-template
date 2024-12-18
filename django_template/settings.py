@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_countries',
+    'users',
     # allauth
     'allauth',
     'allauth.account',
@@ -59,7 +60,6 @@ INSTALLED_APPS = [
     'api',
     'persons',
     'social',
-    'users',
     'authentication',
 ]
 
