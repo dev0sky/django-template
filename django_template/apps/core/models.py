@@ -100,19 +100,30 @@ class Log(Thing):
 
 class PhysicalObject(models.Model):
     height = models.DecimalField(null=True, max_digits=8, decimal_places=2, default='0.0', verbose_name=_('Height'))  
-    height_uom = models.ForeignKey('sat.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_height_uom', verbose_name=_('Height UOM'), help_text=_('Unit of measurement for height'), null=True, blank=True)                                                              
+    height_uom = models.ForeignKey('core.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_height_uom', verbose_name=_('Height UOM'), help_text=_('Unit of measurement for height'), null=True, blank=True)                                                              
     width = models.DecimalField(null=True, max_digits=8, decimal_places=2, default='0.0', verbose_name=_('Width'))   
-    width_uom = models.ForeignKey('sat.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_width_uom', verbose_name=_('Width UOM'), help_text=_('Unit of measurement for width'), null=True, blank=True)                                                             
+    width_uom = models.ForeignKey('core.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_width_uom', verbose_name=_('Width UOM'), help_text=_('Unit of measurement for width'), null=True, blank=True)                                                             
     lenght = models.DecimalField(null=True, max_digits=8, decimal_places=2, default='0.0', verbose_name=_('Lenght'))                                                                
-    lenght_uom = models.ForeignKey('sat.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_lenght_uom', verbose_name=_('Lenght UOM'), help_text=_('Unit of measurement for lenght'), null=True, blank=True)
+    lenght_uom = models.ForeignKey('core.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_lenght_uom', verbose_name=_('Lenght UOM'), help_text=_('Unit of measurement for lenght'), null=True, blank=True)
     volume = models.DecimalField(null=True, max_digits=8, decimal_places=2, default='0.0', verbose_name=_('Volume'))  
-    volume_uom = models.ForeignKey('sat.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_volume_uom', verbose_name=_('Volume UOM'), help_text=_('Unit of measurement for volume'), null=True, blank=True)
+    volume_uom = models.ForeignKey('core.UnitOfMeasurement', on_delete=models.CASCADE, related_name='physicalobject_fk_volume_uom', verbose_name=_('Volume UOM'), help_text=_('Unit of measurement for volume'), null=True, blank=True)
     
     class Meta:
         abstract = True
 
+class Topic(Thing):
+    code = models.CharField(null=False, max_length=24, verbose_name=_('Code'))
+
+    def __str__(self):
+        return f'{self.code} - {self.name}'
+    
+    class Meta:
+        verbose_name = _('Thematic Area')
+        verbose_name_plural = _('Thematic Areas')
+        ordering = ['code',]
+    
 class Category(Thing):
-    thematic_areas = models.ManyToManyField('sat.ThematicArea', related_name='category_fk_thematic_areas',  verbose_name=_('Thematic Areas'))
+    topic = models.ManyToManyField('core.Topic', related_name='category_fk_thematic_areas',  verbose_name=_('Topic'))
     key = models.CharField(null=False, max_length=48,verbose_name=_('Category Key'))
     is_popular = models.BooleanField(default=False, verbose_name=_('Is Popular'))
     color = ColorField(default='#FFFFFF', verbose_name=_('Emphasis'))
@@ -187,3 +198,15 @@ class CategoryImage(Image):
     class Meta:
         verbose_name = _('Category Image')
         verbose_name_plural = _('Category Images')
+
+class UnitOfMeasurement(Thing):
+    key = models.CharField(null=False, max_length=128, verbose_name=_('Key'))
+    type_of = models.CharField(null=False, max_length=128, verbose_name=_('Type'))
+
+    def __str__(self):
+        return f'{self.name} - {self.type_of}'
+    
+    class Meta:
+        verbose_name = _('Unit of Measurement')
+        verbose_name_plural = _('Units of Measurement')
+        ordering = ['type_of',]

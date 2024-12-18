@@ -36,23 +36,7 @@ class CommonProfile(Profile):
         verbose_name = _('User Profile')
         verbose_name_plural = _('User Profiles')
         ordering = ['user', '-created_at', 'type', 'is_active']
-        unique_together = ['user', 'person']
-
-class CompanyProfile(Profile):
-    user = models.OneToOneField('users.User', on_delete=models.CASCADE, related_name='companyprofile_fk_user', verbose_name=_('User'))
-    company = models.OneToOneField('companies.Company', on_delete=models.CASCADE, related_name='companyprofile_fk_company', verbose_name=_('Company'), null=False, blank=False)
-    website = models.URLField(max_length=200, blank=True, verbose_name=_('Website'))
-
-    def __str__(self):
-        return f'{self.type} - {self.company_name}'
-
-    class Meta:
-        verbose_name = _('Company Profile')
-        verbose_name_plural = _('Company Profiles')
-        ordering = ['company', '-created_at', 'type', 'is_active']
-        unique_together = ['user', 'company']
-
-
+        unique_together = ['user', 'person'] 
 
 class Post(Thing):
     TYPE_CHOICES = [

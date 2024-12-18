@@ -1,8 +1,8 @@
 from django.contrib import admin
 from core.admin_utils import log_admin_action
 from import_export.admin import ImportExportModelAdmin
-from core.models import Phone, Address,Email, Log, Category, Date, CategoryIcon, CategoryImage
-from core.resources import LogResource, AddressResource, PhoneResource, DateResource,CategoryIconResource,CategoryImageResource, EmailResource
+from core.models import Phone, Address,Email, Log, Topic, Category, Date, CategoryIcon, CategoryImage
+from core.resources import LogResource, AddressResource, PhoneResource, DateResource,CategoryIconResource, CategoryImageResource, EmailResource, TopicResource
 
 class CategoryImageInline(admin.StackedInline):
     model = CategoryImage
@@ -69,13 +69,20 @@ class DateAdmin(ImportExportModelAdmin):
     # list_filter = ()
     search_fields = ('name','description')
 
+@admin.register(Topic)
+class ThematicAreaAdmin(ImportExportModelAdmin):
+    resource_class = TopicResource
+    list_per_page = 100
+    list_display = ('code', 'name', )
+    search_fields = ['code', 'name']
+
 @admin.register(Category)
 class CategoryAdmin(ImportExportModelAdmin):
     resource_class = Category
     list_display = ('name','description', 'key')
     # list_filter = ()
     search_fields = ('name','description', 'key')
-    autocomplete_fields = ['thematic_areas',]
+    autocomplete_fields = ['topic',]
     inlines = [ CategoryImageInline, CategoryIconInline]
     def save_model(self, request, obj, form, change):
         log_admin_action(request, obj, form, change)

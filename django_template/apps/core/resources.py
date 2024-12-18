@@ -1,5 +1,5 @@
 from import_export import resources
-from core.models import Log, Address, Email, Phone, Category, Date,CategoryImage,CategoryIcon
+from core.models import Log, Address, Email, Phone, Topic, Category, Date,CategoryImage,CategoryIcon
 
 class PhoneResource(resources.ModelResource):
     class Meta:
@@ -31,6 +31,9 @@ class DateResource(resources.ModelResource):
         fields = ('id', 'date_name', 'date_description', 'start_at', 'end_at', 'status', 'created_at',
                   'updated_at')
         
+class TopicResource(resources.ModelResource):
+    class Meta:
+        model = Topic
 
 class CategoryIconResource(resources.ModelResource):
     class Meta:
