@@ -5,6 +5,7 @@ import json
 from pathlib import Path 
 from dotenv import load_dotenv
 from datetime import timedelta
+from django.utils.translation import gettext_lazy as _
 load_dotenv()
 
 
@@ -17,11 +18,11 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'localhost',
-    f'{os.getenv('MAIN_DOMAIN')}',
-    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
-    f'{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}', 
+    f"{os.getenv('MAIN_DOMAIN')}",
+    f"{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}",
+    f"{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}",
+    f"{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}",
+    f"{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}"
 ]
 #default
 INSTALLED_APPS = [
@@ -48,39 +49,42 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-    'api',
     'corsheaders',
     # THEME
     'crispy_forms',
     # JSON, CSV, JSON, XML
     'import_export',
-
+    # CUSTOM APPS
+    'core',
+    'api',
+    'persons',
+    'social',
+    'users',
+    'authentication',
 ]
-INSTALLED_APPS.extend(os.getenv('DJANGO_PIP_APPS').split())
-INSTALLED_APPS.extend(os.getenv('DJANGO_APPS').split())
 
 # CSRF (Cross-Site Request Forgery)
 CSRF_COOKIE_SECURE = not DEBUG
 
 CSRF_TRUSTED_ORIGINS = [
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}',
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}",
 ]
 
 # CORS (Cross-Origin Resource Sharing)
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}',
-    f'{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}',
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('DJANGO_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REACT_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('NGINX_APP_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('PSQL_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}",
+    f"{os.getenv('PROTOCOL')}://{os.getenv('MAIN_DOMAIN')}",
 ]
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
@@ -125,14 +129,15 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Whitenoise
     'django.middleware.locale.LocaleMiddleware',  # Multi-Language
     'corsheaders.middleware.CorsMiddleware',  # corsheaders
+    'allauth.account.middleware.AccountMiddleware', # allauth
 ]
 
-ROOT_URLCONF = f'{os.getenv('APP_NAME')}.urls'
+ROOT_URLCONF = f"{os.getenv('APP_NAME')}.urls"
 
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}/0', 
+        'LOCATION': f"redis://{os.getenv('MAIN_DOMAIN')}:{os.getenv('REDIS_PORT')}/0", 
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
             # "SOCKET_CONNECT_TIMEOUT": 5,  # seconds
@@ -147,7 +152,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / f'{os.getenv('APP_NAME')}/templates',
+            BASE_DIR / f"{os.getenv('APP_NAME')}/templates",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -161,7 +166,16 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = f'{os.getenv('APP_NAME')}.wsgi.application'
+# allauth
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+WSGI_APPLICATION = f"{os.getenv('APP_NAME')}.wsgi.application"
 
 
 # Database

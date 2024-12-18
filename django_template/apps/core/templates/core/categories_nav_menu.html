@@ -1,0 +1,36 @@
+{% load django_bootstrap5 %}
+{% load static %}
+{% load i18n %}
+{% block categories_nav_menu %}
+<div class="container p-3" id="categories_menu">
+  <div class="row row-cols-3 g-4">
+  {% for main_category in categories %}
+  {% if main_category.parent is None %}
+  <div class="col h-100 categories_menu_category">
+    <h6 class="text-primary categories_menu_category_title">{{ main_category.name }}</h6>
+      {% for subcategory in categories %}
+      {% if subcategory.parent == main_category.id %}
+      <a class="categories_menu_subcategory link-dark text-decoration-none pe-auto">{{ subcategory.name }}</a>
+      {% endif %}
+      {% endfor %}
+  </div>
+  {% endif %}
+  {% endfor %}
+{% endblock categories_nav_menu %}
+
+  </div>
+
+</div>
+<style>
+  #categories_menu{
+    width: max-content;
+    min-width:  20rem;
+    max-width:  60vw;
+  }
+  .categories_menu_category_title{
+    font-size: .8rem;
+  }
+  .categories_menu_subcategory{
+    font-size: .75rem;
+  }
+</style>
