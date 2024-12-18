@@ -5,7 +5,8 @@ def log(message):
 
 def main(base_uri: list):
     try:
-        base_uri = os.sep.join(base_uri[:-1])
+        base_uri = os.sep.join(base_uri)
+        print(base_uri)
         for path, folders, files in os.walk(base_uri):
             if all(condition in path for condition in ["migrations", "__pycache__", "django-simple-history", "venv"]):
                 for file in files:
@@ -19,6 +20,7 @@ def main(base_uri: list):
 
 if __name__ == "__main__":
     base_uri = os.getcwd().split(os.sep)
+    print(base_uri)
     if not base_uri[-1] == "django-template":
         log("Error: This script should be executed from the directory [./django-template/]")
         exit()
