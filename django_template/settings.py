@@ -55,12 +55,6 @@ INSTALLED_APPS = [
     # JSON, CSV, JSON, XML
     'import_export',
     # CUSTOM APPS
-    'core',
-    'api',
-    'persons',
-    'social',
-    'users',
-    'authentication',
 ]
 
 # CSRF (Cross-Site Request Forgery)
@@ -91,7 +85,6 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 SILENCED_SYSTEM_CHECKS = ["security.W019"]
 
 SITE_ID = 1
-AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
@@ -203,7 +196,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
-            'min_length': 8,
+            'min_length': 0 if DEBUG else 12,
         }
     },
     {
@@ -214,7 +207,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if DEBUG:
+if not DEBUG:
     AUTH_PASSWORD_VALIDATORS.append(
         {
             'NAME': 'django.contrib.auth.password_validation.UserBlacklistValidator',
