@@ -380,12 +380,11 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-
-# EMAILEMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-# EMAIL_HOST = os.getenv('EMAIL_HOST')
-# EMAIL_PORT = os.getenv('EMAIL_PORT')
-# EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
-# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
-# SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND') if os.getenv('EMAIL_BACKEND') else None
+EMAIL_HOST = os.getenv('EMAIL_HOST') if os.getenv('EMAIL_HOST') else None
+EMAIL_PORT = os.getenv('EMAIL_PORT') if os.getenv('EMAIL_PORT') else None
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') == 'True' if os.getenv('EMAIL_USE_TLS') else None
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') if os.getenv('EMAIL_HOST_USER') else None
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') if os.getenv('EMAIL_HOST_PASSWORD') else None
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL') if os.getenv('DEFAULT_FROM_EMAIL') else None
+SERVER_EMAIL = os.getenv('SERVER_EMAIL') if os.getenv('SERVER_EMAIL') else None
