@@ -1,0 +1,10 @@
+# Enter the django container
+docker exec -it $DJANGO_CONTAINER_NAME //bin/sh
+
+# djlint
+djlint . --check
+djlint . --reformat
+djlint . --reformat --format-css --format-js
+
+# django
+python manage.py createsuperuser
