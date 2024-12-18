@@ -1,8 +1,10 @@
+from dotenv import load_dotenv
+load_dotenv()
 import os
-name = 'Keyco'
 
+name = f"{os.getenv('APP_NAME')}"
 
-bind = "api:8000"
+bind = f"api:{os.getenv('DJANGO_APP_PORT')}"
 backlog = 1024 * 4
 
 def get_workers():
@@ -19,12 +21,10 @@ timeout = 60 * 30  # 30 minutos
 
 keepalive = 10
 
-
 loglevel = 'info' 
 errorlog = '-'
 accesslog = '-'
 access_log_format = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
-
 
 def post_fork(server, worker):
     server.log.info("Worker spawned (pid: %s)", worker.pid)
